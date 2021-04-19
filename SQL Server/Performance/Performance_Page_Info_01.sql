@@ -1,0 +1,51 @@
+-- PÁGINA IO
+--OBJECT: 8:1429580131:11  
+--SELECT DB_NAME(8) AS DBNAME
+--DBCC TRACEON(3604)
+--DBCC PAGE(8, 1429580131, 11) 
+--DBCC TRACEOFF(3604)
+
+--PAGE: (1:6077476)
+--BUFFER:
+--BUF @0x0000000A72FAA740
+--bpage = 0x0000000A721BE000           bhash = 0x0000000000000000           bpageno = (1:6077476)
+--bdbid = 10                           breferences = 0                      bcputicks = 0
+--bsampleCount = 0                     bUse1 = 8931                         bstat = 0xc00009
+--blog = 0x21212159                    bnext = 0x0000000000000000           
+--PAGE HEADER:
+--Page @0x0000000A721BE000
+--m_pageId = (1:6077476)               m_headerVersion = 1                  m_type = 1
+--m_typeFlagBits = 0x4                 m_level = 0                          m_flagBits = 0x200
+--m_objId (AllocUnitId.idObj) = 50     m_indexId (AllocUnitId.idInd) = 256  
+--Metadata: AllocUnitId = 72057594041204736                                 
+--Metadata: PartitionId = 72057594040156160                                 Metadata: IndexId = 1
+--Metadata: ObjectId = 741577680       m_prevPage = (1:6077475)             m_nextPage = (1:6077477)
+--pminlen = 26                         m_slotCnt = 53                       m_freeCnt = 136
+--m_freeData = 7950                    m_reservedCnt = 0                    m_lsn = (288653:1325:17)
+--m_xactReserved = 0                   m_xdesId = (0:0)                     m_ghostRecCnt = 0
+--m_tornBits = -72814570               
+--Allocation Status
+--GAM (1:5623552) = ALLOCATED          SGAM (1:5623553) = NOT ALLOCATED     
+--PFS (1:6074088) = 0x40 ALLOCATED   0_PCT_FULL                             DIFF (1:5623558) = CHANGED
+--ML (1:5623559) = NOT MIN_LOGGED      
+--DBCC execution completed. If DBCC printed error messages, contact your system administrator.
+
+	
+--USE DataUnify
+--GO
+--SELECT 
+--	O.Name AS TableName, 
+--	I.name AS IndexName,
+--	Schema_Name(O.Schema_ID) AS SchemaName
+--FROM sys.partitions P JOIN sys.objects O ON P.Object_ID = O.Object_ID
+--JOIN sys.indexes I ON P.Object_ID = i.Object_ID  AND P.Index_ID = I.Index_ID
+--WHERE P.Hobt_ID = 72057594042908672 --(PartitionId)
+
+--SELECT T.Name AS TableName, IND.Name AS IndexName, IND.Index_ID AS IndexId, IC.Index_Column_ID AS ColumnId, COL.Name AS ColName
+--	FROM sys.indexes IND
+--		JOIN sys.index_columns IC ON IND.Object_ID = IC.Object_ID AND IND.Index_ID = IC.Index_ID
+--		JOIN sys.columns COL ON IC.Object_ID = COL.Object_ID AND IC.Column_ID = COL.Column_ID
+--		JOIN sys.tables T ON IND.Object_ID = T.Object_ID 
+--	WHERE IND.Is_Primary_Key = 0  AND IND.Is_Unique = 0 AND IND.Is_Unique_Constraint = 0 
+--		AND T.Is_Ms_Shipped = 0 AND IND.Name = 'IX_tmpDesnormPF_2'
+--	ORDER BY  T.Name, IND.Name, IND.Index_ID, IC.Index_Column_
