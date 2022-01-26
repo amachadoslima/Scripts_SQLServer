@@ -1,13 +1,13 @@
 ﻿USE master
 GO
-IF(EXISTS(SELECT 1 FROM sys.objects WHERE [name] = N'stpSecurity_Checklist' AND [type] = N'P'))
-DROP PROCEDURE stpSecurity_Checklist
+IF(EXISTS(SELECT 1 FROM sys.objects WHERE [name] = N'stp_security_checklist' AND [type] = N'P'))
+DROP PROCEDURE stp_security_checklist
 GO
 --------------------------------------------------------------------------------------------------------------------
 -- stpSecurity_Checklist - 1.0.5 (09/11/2020)
 -- Checklist de segurança para ambientes SQL Server - Mais de 80 validações de segurança!!
 --------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE dbo.stpSecurity_Checklist 
+CREATE PROCEDURE dbo.stp_security_checklist 
 (
     @Language VARCHAR(2) = NULL,
     @Heavy_Operations BIT = 1
@@ -52,7 +52,7 @@ Begin
 					AND LEFT(CAST(SERVERPROPERTY('MachineName') AS VARCHAR(8000)), 8) = 'EC2AMAZ-' AND LEFT(CAST(SERVERPROPERTY('ServerName') AS VARCHAR(8000)), 8) = 'EC2AMAZ-' THEN 1 
 				Else 0 END
 		)
-	DECLARE @Query VARCHAR(MAX),
+	DECLARE @Query VARCHAR(MAX)
 	DECLARE @DtHoje DATE = GETDATE()
     
 
@@ -6568,5 +6568,5 @@ WHERE
 END
 
 
--- EXEC dbo.stpSecurity_Checklist @Language = 'pt'
--- exec dbo.stpSecurity_Checklist  @Language = 'en'
+-- EXEC dbo.stp_security_checklist @Language = 'pt'
+-- exec dbo.stp_security_checklist  @Language = 'en'

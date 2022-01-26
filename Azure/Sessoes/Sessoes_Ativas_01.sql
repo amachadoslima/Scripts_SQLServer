@@ -5,7 +5,7 @@ exec sp_WhoIsActive
 		@not_filter_type = 'session',
 		@show_own_spid = 0,
 		@show_system_spids = 0,
-		@show_sleeping_spids = 0,
+		@show_sleeping_spids = 1,
 		@get_full_inner_text = 0,
 		@get_plans = 1,
 		@get_outer_command = 1,
